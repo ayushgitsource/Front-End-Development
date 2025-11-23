@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Grid Calculator UI (Demo)</title>
+<style>
+  :root{
+    --bg:#0f172a; --panel:#0b1220; --accent:#10b981; --muted:#94a3b8;
+    --btn:#1f2937; --btn-op:#ef4444; --gap:10px;
+  }
+   body{
+    margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(180deg,#071029,#0b1220); font-family:system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    color:#e6eef8;
+  }
+  .calculator{
+    display: grid;
+    width: min(480px, 96vw);
+    background: linear-gradient(180deg,#07172a,#091827);
+    padding:18px;
+    border-radius:14px;
+    box-shadow: 0 10px 30px rgba(2,6,23,.6);
+    grid-template-rows:   repeat(6,minmax(60px, 1fr));
+    grid-template-columns: repeat(4,1fr);
+    gap:5px
+
+
+  }
+  .display{
+    grid-column: 1/-1;
+    background-color: var(--panel);
+    border-radius: 10px;
+    text-align: right;
+    padding: 10px;
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  .span-2{
+    grid-column: span 2;
+  }
+  .btn{
+    border-radius: 10px;
+    background-color: var(--btn);
+    color: white;
+    font-size: larger;
+  }
+
+  .btn.op{
+    background-color: var(--btn-op);
+  }
+  .equal{
+    background: var(--accent);
+    color: var(--panel);
+    font-weight: bold;
+  }
+    .btn:active{
+        
+    }
+
+
+  
+
+
+  </style>
+</head>
+<body>
+
+<div class="calculator" role="application" aria-label="Calculator">
+  <div id="display" class="display" aria-live="polite">0</div>
+
+  <!-- Row 1 -->
+  <button class="btn clear" data-value="C" aria-label="Clear (C)">C</button>
+  <button class="btn" data-value="(" aria-label="Left Parenthesis">(</button>
+  <button class="btn" data-value=")" aria-label="Right Parenthesis">)</button>
+  <button class="btn op" data-value="/" aria-label="Divide">÷</button>
+
+  <!-- Row 2 -->
+  <button class="btn" data-value="7">7</button>
+  <button class="btn" data-value="8">8</button>
+  <button class="btn" data-value="9">9</button>
+  <button class="btn op" data-value="*" aria-label="Multiply">×</button>
+
+  <!-- Row 3 -->
+  <button class="btn" data-value="4">4</button>
+  <button class="btn" data-value="5">5</button>
+  <button class="btn" data-value="6">6</button>
+  <button class="btn op" data-value="-" aria-label="Minus">−</button>
+
+  <!-- Row 4 -->
+  <button class="btn" data-value="1">1</button>
+  <button class="btn" data-value="2">2</button>
+  <button class="btn" data-value="3">3</button>
+  <button class="btn op" data-value="+" aria-label="Plus">+</button>
+
+  <!-- Row 5 -->
+  <button class="btn span-2" data-value="0">0</button>
+  <button class="btn" data-value=".">.</button>
+  <button class="btn equal" data-value="=" aria-label="Equals">=</button>
+</div>
+
+
+
+</body>
+</html>
