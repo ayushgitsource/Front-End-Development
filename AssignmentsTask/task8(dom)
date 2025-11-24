@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Form Validation App</title>
+<style>
+  body { font-family: Arial, sans-serif; background:#f4f4f4; display:flex; justify-content:center; align-items:center; height:100vh; margin:0; }
+  .form-box { background:white; padding:25px; width:360px; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.1); }
+  .form-box input { width:100%; padding:10px; margin-top:5px; border:1px solid #ccc; border-radius:6px; font-size:15px; }
+  .error { font-size:13px; color:#dc2626; height:16px; margin-top:2px; }
+  .valid { border-color:#16a34a; }
+  .invalid { border-color:#dc2626; }
+  button { width:100%; padding:10px; margin-top:15px; background:#2563eb; border:none; color:white; font-size:16px; border-radius:6px; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<div class="form-box">
+  <h2>Registration Form</h2>
+
+  <label>Name</label>
+  <input type="text" id="name">
+  <div class="error" id="nameError"></div>
+
+  <label>Email</label>
+  <input type="text" id="email">
+  <div class="error" id="emailError"></div>
+
+  <label>Password</label>
+  <input type="password" id="password">
+  <div class="error" id="passwordError"></div>
+
+  <button id="submitBtn">Register</button>
+</div>
+
+<script>
+  const nameField = document.getElementById("name");
+  const emailField = document.getElementById("email");
+  const passField = document.getElementById("password");
+
+  const nameError = document.getElementById("nameError");
+  const emailError = document.getElementById("emailError");
+  const passError = document.getElementById("passwordError");
+
+  document.getElementById("submitBtn").onclick = function (e) {
+    e.preventDefault();
+    validateForm();
+  };
+
+  function setValid(field, errorBox) {
+    field.classList.remove("invalid");
+    field.classList.add("valid");
+    errorBox.textContent = "";
+  }
+
+  function setInvalid(field, errorBox, message) {
+    field.classList.remove("valid");
+    field.classList.add("invalid");
+    errorBox.textContent = message;
+  }
+
+  function validateForm() {
+    let valid = true;
+
+    if (nameField.value.trim() === "") {
+      setInvalid(nameField, nameError, "Name is required");
+      valid = false;
+    } else setValid(nameField, nameError);
+
+    if (emailField.value.trim() === "" || !emailField.value.includes("@")) {
+      setInvalid(emailField, emailError, "Enter a valid email");
+      valid = false;
+    } else setValid(emailField, emailError);
+
+    if (passField.value.length < 8) {
+      setInvalid(passField, passError, "Password must be at least 8 characters");
+      valid = false;
+    } else setValid(passField, passError);
+
+    if (valid) alert("Form submitted successfully!");
+  }
+</script>
+
+</body>
+</html>
