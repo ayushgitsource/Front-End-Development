@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Post Loader</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+#msg {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+li {
+  font-size: 18px;
+  margin: 5px 0;
+}
+</style>
+</head>
+<body>
+
+<h2>Blog Post Loader</h2>
+
+<button id="loadBtn">Load Posts</button>
+<button id="retryBtn" style="display:none;">Retry</button>
+
+<div id="msg"></div>
+<ul id="posts"></ul>
+
+<script>
+function fetchPosts() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (Math.random() < 0.3) reject("Failed to load");
+      else resolve([
+        "How to Become a Web Developer",
+        "10 Tips for Better JavaScript",
+        "Understanding Async/Await",
+        "Mastering DOM Manipulation",
+        "Frontend Developer Roadmap 2025"
+      ]);
+    }, 2000);
+  });
+}
+
+async function loadPosts() {
+  const msg = document.getElementById("msg");
+  const list = document.getElementById("posts");
+  const retry = document.getElementById("retryBtn");
+  msg.innerHTML = "Loading posts...";
+  list.innerHTML = "";
+  retry.style.display = "none";
+  try {
+    const posts = await fetchPosts();
+    msg.innerHTML = "";
+    posts.forEach(p => {
+      const li = document.createElement("li");
+      li.innerText = p;
+      list.appendChild(li);
+    });
+  } catch {
+    msg.innerHTML = "Failed to load posts.";
+    retry.style.display = "inline-block";
+  }
+}
+
+document.getElementById("loadBtn").addEventListener("click", loadPosts);
+document.getElementById("retryBtn").addEventListener("click", loadPosts);
+</script>
+
+</body>
+</html>
