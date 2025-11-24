@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Indian Joke Generator</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+}
+#jokeBox {
+  margin-top: 20px;
+  font-size: 22px;
+  line-height: 1.6;
+}
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<h2>Indian Joke Generator</h2>
+
+<button id="jokeBtn">Next Joke</button>
+
+<div id="jokeBox"></div>
+
+<script>
+const jokes = [
+  { setup: "Teacher: Why are you late?", punchline: "Student: Sir, there was a board — 'School Ahead, Go Slow'." },
+  { setup: "Wife: Are you listening?", punchline: "Husband: Yes, yes… continue… What were you saying?" },
+  { setup: "Doctor: Take this and sleep.", punchline: "Patient: After eating or should I keep it under the pillow?" },
+  { setup: "Friend: Bro, I failed in exam.", punchline: "Other: It’s okay… failure is also a memory!" },
+  { setup: "Pappu: Dad, I scored 100!", punchline: "Dad: In which subject? Pappu: In total." },
+  { setup: "Maths Teacher: Why crying?", punchline: "Student: You said this chapter will make us cry." },
+  { setup: "Wife: I saved ₹500 today!", punchline: "Husband: How? Wife: I didn’t go shopping." },
+  { setup: "Boss: Why absent yesterday?", punchline: "Employee: Sir, I was present everywhere except office." },
+  { setup: "Customer: Is the milk fresh?", punchline: "Shopkeeper: Yes, cow was drinking it just now." },
+  { setup: "Son: Dad, new phone?", punchline: "Dad: Bring the old one. Son: It’s lost. Dad: Then bring that first." }
+];
+
+function getJoke() {
+  return new Promise((resolve) => {
+    const j = jokes[Math.floor(Math.random() * jokes.length)];
+    setTimeout(() => resolve(j), 500);
+  });
+}
+
+function showJoke() {
+  const btn = document.getElementById("jokeBtn");
+  const box = document.getElementById("jokeBox");
+  btn.disabled = true;
+  btn.innerText = "Loading...";
+
+  getJoke()
+    .then(joke => {
+      box.innerHTML = `<b>${joke.setup}</b><br>${joke.punchline}`;
+      btn.disabled = false;
+      btn.innerText = "Next Joke";
+    })
+    .catch(() => {
+      box.innerHTML = "Something went wrong!";
+      btn.disabled = false;
+      btn.innerText = "Next Joke";
+    });
+}
+
+document.getElementById("jokeBtn").addEventListener("click", showJoke);
+showJoke();
+</script>
+
+</body>
+</html>
