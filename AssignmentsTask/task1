@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Fetch Users</title>
+<style>
+table {
+  width: 60%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+}
+#loading {
+  display: none;
+  font-size: 20px;
+  font-weight: bold;
+}
+button {
+  margin-top: 20px;
+  padding: 8px 15px;
+}
+</style>
+</head>
+<body>
+
+<h2>User Table</h2>
+<button id="refreshBtn">Refresh</button>
+<div id="loading">Loading...</div>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>City</th>
+</tr>
+</thead>
+<tbody id="userBody"></tbody>
+</table>
+
+<script>
+async function fetchUsers() {
+  document.getElementById("loading").style.display = "block";
+  const res = await fetch("https://jsonplaceholder.typicode.com/users");
+  const data = await res.json();
+
+  const indianNames = [
+    "Aarav Sharma", "Vihaan Kumar", "Reyansh Singh", "Advik Mehta", "Kabir Verma",
+    "Anaya Patel", "Myra Gupta", "Ira Reddy", "Siya Iyer", "Aadhya Nair"
+  ];
+
+  const indianCities = [
+    "Delhi", "Mumbai", "Bengaluru", "Hyderabad", "Kolkata",
+    "Pune", "Chennai", "Jaipur", "Ahmedabad", "Lucknow"
+  ];
+
+  const body = document.getElementById("userBody");
+  body.innerHTML = "";
+
+  data.forEach((user, i) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${indianNames[i]}</td>
+      <td>${indianNames[i].split(" ")[0].toLowerCase()}@gmail.com</td>
+      <td>${indianCities[i]}</td>
+    `;
+    body.appendChild(tr);
+  });
+
+  document.getElementById("loading").style.display = "none";
+}
+
+document.getElementById("refreshBtn").addEventListener("click", fetchUsers);
+fetchUsers();
+</script>
+
+</body>
+</html>
