@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Live Character Counter</title>
+<style>
+  body { font-family: Arial, sans-serif; background:#f7f7f7; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }
+  .card { background:#fff; padding:24px; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.08); width:360px; }
+  textarea { width:100%; height:120px; padding:10px; font-size:14px; border:1px solid #ddd; border-radius:6px; resize:none; box-sizing:border-box; }
+  .meta { display:flex; justify-content:space-between; align-items:center; margin-top:10px; }
+  .counter { font-weight:600; }
+  .green { color:#15803d; }
+  .orange { color:#b45309; }
+  .red { color:#dc2626; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <label for="inputArea">Enter text</label>
+    <textarea id="inputArea" maxlength="100" placeholder="Start typing..."></textarea>
+    <div class="meta">
+      <div id="counter" class="counter">Characters left: 100</div>
+      <div id="percent">0%</div>
+    </div>
+  </div>
+
+<script>
+  const textarea = document.getElementById('inputArea');
+  const counter = document.getElementById('counter');
+  const percent = document.getElementById('percent');
+  const MAX = 100;
+
+  function update() {
+    if (textarea.value.length > MAX) textarea.value = textarea.value.slice(0, MAX);
+    const left = MAX - textarea.value.length;
+    const usedPct = Math.round((textarea.value.length / MAX) * 100);
+    counter.textContent = `Characters left: ${left}`;
+    percent.textContent = `${usedPct}%`;
+    counter.classList.remove('green','orange','red');
+    if (left > Math.floor(MAX * 0.33)) counter.classList.add('green');
+    else if (left > Math.floor(MAX * 0.1)) counter.classList.add('orange');
+    else counter.classList.add('red');
+  }
+
+  textarea.addEventListener('input', update);
+  textarea.addEventListener('paste', () => setTimeout(update, 0));
+  update();
+</script>
+</body>
+</html>
